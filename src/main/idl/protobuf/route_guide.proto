@@ -1,0 +1,46 @@
+option java_multiple_files = false;
+option java_package = "example.protobuf.idl";
+option java_outer_classname = "RouteGuideProto";
+
+message Point {
+  required int32 latitude = 1;
+  optional int32 longitude = 2;
+}
+
+message Rectangle {
+  required Point lo = 1;
+
+  required Point hi = 2;
+}
+
+message Feature {
+  required string name = 1;
+
+  required Point location = 2;
+}
+
+message RouteNote {
+  required Point location = 1;
+
+  required string message = 2;
+}
+
+message RouteSummary {
+  required int32 point_count = 1;
+
+  required int32 feature_count = 2;
+
+  required int32 distance = 3;
+
+  required int32 elapsed_time = 4;
+}
+
+service RouteGuide {
+  rpc GetFeature(Point) returns (Feature);
+
+  rpc ListFeatures(Rectangle) returns (Feature);
+
+  rpc RecordRoute(Point) returns (RouteSummary);
+
+  rpc RouteChat(RouteNote) returns (RouteNote);
+}

@@ -1,0 +1,25 @@
+option java_generic_services = true;
+option java_multiple_files = false;
+
+option java_package="example.protobuf.idl";
+option java_outer_classname = "ProtobufDemo";
+
+message SearchRequest{
+  required string query=1;
+  optional int32 page_number=2;
+  optional int32 result_per_page=3 [default = 10];
+  repeated int32 foo = 4[packed=true];
+  extensions 100 to max;
+}
+
+message SearchResponse{
+  required int32 status=1;
+}
+
+extend SearchRequest{
+  optional string ant_name =101;
+}
+
+service Msg {
+  rpc search(SearchRequest) returns(SearchResponse);
+}
